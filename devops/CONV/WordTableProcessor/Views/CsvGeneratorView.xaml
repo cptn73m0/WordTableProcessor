@@ -1,0 +1,183 @@
+<UserControl x:Class="WordTableProcessor.Views.CsvGeneratorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:WordTableProcessor.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="GenerateButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="24,0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}"
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="1" BlurRadius="4" Opacity="0.3" Direction="270"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#106EBE"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="BorderBrush" Value="#D1D1D1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+        <StackPanel>
+            <TextBlock Text="Генерация CSV файлов" FontSize="20" FontWeight="Bold" 
+                       Margin="0,0,0,20" Foreground="#1A1A1A"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Text="Тип документа:" VerticalAlignment="Center" 
+                           Margin="0,0,15,0" FontWeight="SemiBold" Foreground="#1A1A1A"/>
+                <ComboBox x:Name="DocumentTypeComboBox" Grid.Column="1"
+                          MaxWidth="400" HorizontalAlignment="Left" Height="36"
+                          SelectionChanged="DocumentTypeComboBox_SelectionChanged"/>
+            </Grid>
+
+            <Expander x:Name="IndexesExpander" Header="Индексы" IsExpanded="False" Margin="0,0,0,15"
+                      Foreground="#1A1A1A">
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <controls:FileSelector x:Name="IndexesSourceSelector" Label="Исходник:"
+                                              Filter="Excel Files|*.xlsx"
+                                              DialogTitle="Выберите Excel файл с индексами"
+                                              FileSelected="IndexesSource_FileSelected"/>
+                        <controls:FileSelector x:Name="IndexesSaveSelector" Label="Сохранить:"
+                                              Filter="CSV Files|*.csv"
+                                              DialogTitle="Сохранить CSV файл"
+                                              FileSelected="IndexesSave_FileSelected"/>
+                        
+                        <Expander Header="Расширенные настройки" Margin="0,15,0,0"
+                                  Foreground="#666666">
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,5">
+                                    <TextBlock Text="Столбец Код:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesCodeColumn" Text="1" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,5">
+                                    <TextBlock Text="Конец таблицы 1:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesTable1End" Text="47-02-096-01" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,5">
+                                    <TextBlock Text="Конец таблицы 2:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesTable2End" Text="40-03-001-12" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="10,5">
+                                    <TextBlock Text="Конец таблицы 3:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesTable3End" Text="47-02-096-01" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,5">
+                                    <TextBlock Text="Конец таблицы 4:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesTable4End" Text="40-03-001-12" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="1" Margin="10,5">
+                                    <TextBlock Text="Региональный ИнЭМ:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesRegionalInem" Text="5" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,5">
+                                    <TextBlock Text="Региональный Мат:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesRegionalMat" Text="6" Padding="8,6"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="1" Margin="10,5">
+                                    <TextBlock Text="Отраслевой ИнЭМ:" Margin="0,0,0,5" Foreground="#666666"/>
+                                    <TextBox x:Name="IndexesIndustryInem" Text="8" Padding="8,6"/>
+                                </StackPanel>
+                            </Grid>
+                        </Expander>
+
+                        <Button x:Name="IndexesGenerateButton" Content="Сформировать"
+                                Style="{StaticResource GenerateButtonStyle}"
+                                Click="IndexesGenerateButton_Click"
+                                HorizontalAlignment="Right" Margin="0,15,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Expander>
+
+            <Expander x:Name="MaterialsExpander" Header="Материалы (ФССЦ/ТССЦ)" IsExpanded="False" Margin="0,0,0,15"
+                      Foreground="#1A1A1A">
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <controls:FileSelector x:Name="MaterialsSourceSelector" Label="Исходник:"
+                                              Filter="Excel Files|*.xlsx"
+                                              DialogTitle="Выберите Excel файл с материалами"
+                                              FileSelected="MaterialsSource_FileSelected"/>
+                        <controls:FileSelector x:Name="MaterialsSaveSelector" Label="Сохранить:"
+                                              Filter="CSV Files|*.csv"
+                                              DialogTitle="Сохранить CSV файл"
+                                              FileSelected="MaterialsSave_FileSelected"/>
+                        <Button x:Name="MaterialsGenerateButton" Content="Сформировать"
+                                Style="{StaticResource GenerateButtonStyle}"
+                                Click="MaterialsGenerateButton_Click"
+                                HorizontalAlignment="Right" Margin="0,15,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Expander>
+
+            <Expander x:Name="MechanismsExpander" Header="Механизмы (ФСЭМ/ТСЭМ)" IsExpanded="False" Margin="0,0,0,15"
+                      Foreground="#1A1A1A">
+                <Border Style="{StaticResource SectionBorderStyle}">
+                    <StackPanel>
+                        <controls:FileSelector x:Name="MechanismsSourceSelector" Label="Исходник:"
+                                              Filter="Excel Files|*.xlsx"
+                                              DialogTitle="Выберите Excel файл с механизмами"
+                                              FileSelected="MechanismsSource_FileSelected"/>
+                        <controls:FileSelector x:Name="MechanismsSaveSelector" Label="Сохранить:"
+                                              Filter="CSV Files|*.csv"
+                                              DialogTitle="Сохранить CSV файл"
+                                              FileSelected="MechanismsSave_FileSelected"/>
+                        <Button x:Name="MechanismsGenerateButton" Content="Сформировать"
+                                Style="{StaticResource GenerateButtonStyle}"
+                                Click="MechanismsGenerateButton_Click"
+                                HorizontalAlignment="Right" Margin="0,15,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Expander>
+
+            <controls:ProgressPanel x:Name="ProgressControl" MinHeight="120"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

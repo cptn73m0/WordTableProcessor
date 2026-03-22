@@ -1,0 +1,115 @@
+<UserControl x:Class="WordTableProcessor.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:WordTableProcessor.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="RecentFileItemStyle" TargetType="Border">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EBEBEB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Настройки" FontSize="20" FontWeight="Bold" Foreground="#1A1A1A"/>
+            <TextBlock Text="Управление приложением и историей" FontSize="12" Foreground="#666666" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Header="Недавние файлы" Padding="15" Margin="0,0,0,20" BorderBrush="#D1D1D1">
+                    <StackPanel>
+                        <TextBlock Text="Быстрый доступ к последним использованным файлам"
+                                   Foreground="#666666" Margin="0,0,0,15"/>
+                        
+                        <ItemsControl x:Name="RecentFilesList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource RecentFileItemStyle}" Cursor="Hand"
+                                            MouseLeftButtonUp="RecentFile_Click">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <TextBlock Grid.Column="0" FontFamily="Segoe MDL2 Assets, Segoe UI Symbol" 
+                                                       FontSize="16" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="#0078D4">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="&#xE8A5;"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding FileType}" Value="CsvFile">
+                                                                <Setter Property="Text" Value="&#xE80A;"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding FileType}" Value="ExcelFile">
+                                                                <Setter Property="Text" Value="&#xE9F9;"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding FileName}" FontWeight="SemiBold" Foreground="#1A1A1A"/>
+                                                <TextBlock Text="{Binding Directory}" FontSize="11"
+                                                           TextTrimming="CharacterEllipsis" Foreground="#888888"/>
+                                            </StackPanel>
+                                            
+                                            <TextBlock Grid.Column="2" Text="{Binding LastAccessed, StringFormat='{}{0:dd.MM.yyyy}'}"
+                                                       VerticalAlignment="Center" Margin="10,0" Foreground="#888888"/>
+                                            
+                                            <Button Grid.Column="3" Content="&#xE711;" 
+                                                    FontFamily="Segoe MDL2 Assets, Segoe UI Symbol" Width="28" Height="28"
+                                                    Background="Transparent" BorderThickness="0"
+                                                    ToolTip="Удалить из истории"
+                                                    Click="RemoveRecentFile_Click"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock x:Name="NoRecentFilesText" Text="Нет недавних файлов"
+                                   Visibility="Collapsed" FontStyle="Italic"
+                                   Foreground="#888888" HorizontalAlignment="Center" Margin="0,20"/>
+
+                        <Button x:Name="ClearHistoryButton" Content="Очистить историю"
+                                HorizontalAlignment="Right" Margin="0,15,0,0"
+                                Click="ClearHistoryButton_Click"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="О приложении" Padding="15" BorderBrush="#D1D1D1">
+                    <StackPanel>
+                        <TextBlock Text="Word Table Processor" FontSize="16" FontWeight="Bold" Foreground="#1A1A1A"/>
+                        <TextBlock Text="Версия 1.0" FontSize="12" Margin="0,5,0,0" Foreground="#666666"/>
+                        <TextBlock Text="Обработка сметных нормативов (ФЕР, ТЕР, ФССЦ, ТССЦ, ФСЭМ, ТСЭМ)"
+                                   FontSize="12" Margin="0,10,0,0" TextWrapping="Wrap" Foreground="#666666"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

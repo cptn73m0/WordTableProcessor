@@ -1,0 +1,32 @@
+# Build results
+bin/
+obj/
+publish/
+*.user
+*.suo
+*.cache
+*.log
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*~
+
+# NuGet
+packages/
+*.nupkg
+
+# Publish
+**/WordTableProcessor.exe
+**/WordTableProcessor.dll
+**/*.zip
+**/publish/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+crash.log

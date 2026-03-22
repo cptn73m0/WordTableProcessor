@@ -1,0 +1,71 @@
+﻿<Window x:Class="WordTableProcessor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WordTableProcessor"
+        mc:Ignorable="d"
+        Title="Word Table Processor" Height="600" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="GenerateCsvButton" Content="Формирование CSV файлов" Width="200" HorizontalAlignment="Left" Margin="0,0,0,10" Click="GenerateCsvButton_Click"/>
+        <TabControl x:Name="MainTabControl" Grid.Row="1">
+            <TabItem Header="ФЕР-2020(9)">
+                <local:FER2020_9 />
+            </TabItem>
+            <TabItem Header="ФССЦ-2020(9)">
+                <local:FSSC2020_9 />
+            </TabItem>
+            <TabItem Header="ФСЭМ-2020(9)">
+                <local:FSEM2020_9 />
+            </TabItem>
+            <TabItem Header="ФЕР-2020(0)">
+                <local:FER2020_0 />
+            </TabItem>
+            <TabItem Header="ФССЦ-2020(0)">
+                <local:FSSC2020_0 />
+            </TabItem>
+            <TabItem Header="ФСЭМ-2020(0)">
+                <local:FSEM2020_0 />
+            </TabItem>
+            <TabItem Header="ТЕР-2014">
+                <local:TER2014 />
+            </TabItem>
+            <TabItem Header="ТССЦ-2014">
+                <local:TSSC2014 />
+            </TabItem>
+            <TabItem Header="ТСЭМ-2014">
+                <local:TSEM2014 />
+            </TabItem>
+            <TabItem Header="ТЕР-2010">
+                <local:TER2010 />
+            </TabItem>
+            <TabItem Header="ТССЦ-2010">
+                <local:TSSC2010 />
+            </TabItem>
+            <TabItem Header="ТСЭМ-2010">
+                <local:TSEM2010 />
+            </TabItem>
+        </TabControl>
+        <Grid x:Name="CsvButtonsPanel" Grid.Row="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="ФЕР-2020(9)" Grid.Row="0" Grid.Column="0" Margin="5" Click="CsvButton_Click"/>
+            <Button Content="ФЕР-2020(0)" Grid.Row="1" Grid.Column="0" Margin="5" Click="CsvButton_Click"/>
+            <Button Content="ТЕР-2014" Grid.Row="2" Grid.Column="0" Margin="5" Click="CsvButton_Click"/>
+            <Button Content="ТЕР-2010" Grid.Row="3" Grid.Column="0" Margin="5" Click="CsvButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

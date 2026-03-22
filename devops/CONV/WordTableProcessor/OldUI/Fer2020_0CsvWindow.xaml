@@ -1,0 +1,130 @@
+<Window x:Class="WordTableProcessor.Fer2020_0CsvWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Формирование CSV для ФЕР-2020(0)" Height="600" Width="800">
+    <Grid Margin="10">
+        <StackPanel>
+            <GroupBox Header="Индексы" Margin="0,0,0,10">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Исходник:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="IndexesSourceFileTextBox" Grid.Row="0" Grid.Column="1" Margin="5,0" IsReadOnly="True" VerticalAlignment="Center"/>
+                    <Button x:Name="IndexesBrowseSourceButton" Content="Обзор" Grid.Row="0" Grid.Column="2" Margin="5,0" Width="80" Click="IndexesBrowseSourceButton_Click"/>
+                    <Button x:Name="IndexesClearSourceButton" Content="X" Grid.Row="0" Grid.Column="3" Margin="5,0" Width="30" Click="IndexesClearSourceButton_Click"/>
+                    <Label Content="Сохранить как:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBox x:Name="IndexesSaveFileTextBox" Grid.Row="1" Grid.Column="1" Margin="5,10,5,0" IsReadOnly="True" VerticalAlignment="Center"/>
+                    <Button x:Name="IndexesBrowseSaveButton" Content="Обзор" Grid.Row="1" Grid.Column="2" Margin="5,10,5,0" Width="80" Click="IndexesBrowseSaveButton_Click"/>
+                    <Expander x:Name="IndexesSettingsExpander" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,10,0,0" Header="Настройка столбцов и концов">
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Столбец Код:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="CodeTextBox" Grid.Row="0" Grid.Column="1" Margin="5,0" Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Конец 1:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Table1EndTextBox" Grid.Row="1" Grid.Column="1" Margin="5,0" Text="{Binding Table1End, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Конец 2:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Table2EndTextBox" Grid.Row="2" Grid.Column="1" Margin="5,0" Text="{Binding Table2End, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Конец 3:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Table3EndTextBox" Grid.Row="3" Grid.Column="1" Margin="5,0" Text="{Binding Table3End, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Конец 4:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Table4EndTextBox" Grid.Row="4" Grid.Column="1" Margin="5,0" Text="{Binding Table4End, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Региональный ИнЭМ:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="RegionalInemTextBox" Grid.Row="5" Grid.Column="1" Margin="5,0" Text="{Binding Regional.Inem, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Региональный Мат:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="RegionalMatTextBox" Grid.Row="6" Grid.Column="1" Margin="5,0" Text="{Binding Regional.Mat, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Отраслевой ИнЭМ:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="IndustryInemTextBox" Grid.Row="7" Grid.Column="1" Margin="5,0" Text="{Binding Industry.Inem, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Label Content="Отраслевой Мат:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBox x:Name="IndustryMatTextBox" Grid.Row="8" Grid.Column="1" Margin="5,0" Text="{Binding Industry.Mat, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Expander>
+                    <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button x:Name="IndexesConfigureColumnsButton" Content="Применить настройки" Width="150" Margin="0,0,10,0" Click="IndexesConfigureColumnsButton_Click"/>
+                        <Button x:Name="IndexesGenerateButton" Content="Сформировать" Width="100" Click="IndexesGenerateButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="ФССЦ" Margin="0,0,0,10">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Исходник:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="FsscSourceFileTextBox" Grid.Row="0" Grid.Column="1" Margin="5,0" IsReadOnly="True" VerticalAlignment="Center"/>
+                    <Button x:Name="FsscBrowseSourceButton" Content="Обзор" Grid.Row="0" Grid.Column="2" Margin="5,0" Width="80" Click="FsscBrowseSourceButton_Click"/>
+                    <Button x:Name="FsscClearSourceButton" Content="X" Grid.Row="0" Grid.Column="3" Margin="5,0" Width="30" Click="FsscClearSourceButton_Click"/>
+                    <Label Content="Сохранить как:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBox x:Name="FsscSaveFileTextBox" Grid.Row="1" Grid.Column="1" Margin="5,10,5,0" IsReadOnly="True" VerticalAlignment="Center"/>
+                    <Button x:Name="FsscBrowseSaveButton" Content="Обзор" Grid.Row="1" Grid.Column="2" Margin="5,10,5,0" Width="80" Click="FsscBrowseSaveButton_Click"/>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button x:Name="FsscConfigureColumnsButton" Content="Настройка столбцов" Width="150" Margin="0,0,10,0" Click="FsscConfigureColumnsButton_Click"/>
+                        <Button x:Name="FsscGenerateButton" Content="Сформировать" Width="100" Click="FsscGenerateButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="ФСЭМ" Margin="0,0,0,10">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Исходник:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="FsemSourceFileTextBox" Grid.Row="0" Grid.Column="1" Margin="5,0" IsReadOnly="True" VerticalAlignment="Center"/>
+                    <Button x:Name="FsemBrowseSourceButton" Content="Обзор" Grid.Row="0" Grid.Column="2" Margin="5,0" Width="80" Click="FsemBrowseSourceButton_Click"/>
+                    <Button x:Name="FsemClearSourceButton" Content="X" Grid.Row="0" Grid.Column="3" Margin="5,0" Width="30" Click="FsemClearSourceButton_Click"/>
+                    <Label Content="Сохранить как:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBox x:Name="FsemSaveFileTextBox" Grid.Row="1" Grid.Column="1" Margin="5,10,5,0" IsReadOnly="True" VerticalAlignment="Center"/>
+                    <Button x:Name="FsemBrowseSaveButton" Content="Обзор" Grid.Row="1" Grid.Column="2" Margin="5,10,5,0" Width="80" Click="FsemBrowseSaveButton_Click"/>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button x:Name="FsemConfigureColumnsButton" Content="Настройка столбцов" Width="150" Margin="0,0,10,0" Click="FsemConfigureColumnsButton_Click"/>
+                        <Button x:Name="FsemGenerateButton" Content="Сформировать" Width="100" Click="FsemGenerateButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
